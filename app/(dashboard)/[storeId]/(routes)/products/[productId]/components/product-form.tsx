@@ -145,29 +145,42 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Images</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value.map((image) => image.url)}
+                    disabled={loading}
+                    onChange={(url) =>
+                      field.onChange([...field.value, { url }])
+                    }
+                    onRemove={(url) =>
+                      field.onChange(
+                        field.value.filter((image) => image.url !== url)
+                      )
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name="images"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Images</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <ImageUpload
-                      value={field.value.map((image) => image.url)}
+                    <Input
                       disabled={loading}
-                      onChange={(url) => {
-                        // Append the new image to the existing array
-                        const updatedImages = [...field.value, { url }];
-                        field.onChange(updatedImages);
-                      }}
-                      onRemove={(url) => {
-                        // Remove the image with the matching URL
-                        const updatedImages = (field.value || []).filter(
-                          (current) => current.url !== url
-                        );
-                        field.onChange(updatedImages);
-                      }}
+                      placeholder="Product Name"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
