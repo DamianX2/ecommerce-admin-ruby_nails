@@ -10,7 +10,7 @@ interface ImageUploadProps {
   disabled?: boolean;
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
-  value: string[];
+  value: string[]; // Array to hold the image URLs
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -19,6 +19,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   value,
 }) => {
+  const [urls, setUrls] = useState<string[]>(value);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -26,25 +27,32 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   }, []);
 
   const onUpload = (result: any) => {
-    onChange(result.info.secure_url);
+    const newUrl = result.info.secure_url;
+    setUrls((prev) => [...prev, newUrl]);
+    onChange(newUrl); // Propagate the new URL to parent
+  };
+
+  const handleOnRemove = (url: string) => {
+    setUrls((prev) => prev.filter((item) => item !== url));
+    onRemove(url); // Propagate removal to parent
   };
 
   if (!isMounted) {
-    return null;
+    return null; // Ensure that the component is only rendered after mounting
   }
 
   return (
     <div>
       <div className="mb-4 flex items-center gap-4">
-        {value.map((url) => (
+        {urls.map((url) => (
           <div
             key={url}
             className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
           >
-            <div className="z-10 absolute top-2 right-2 ">
+            <div className="z-10 absolute top-2 right-2">
               <Button
                 type="button"
-                onClick={() => onRemove(url)}
+                onClick={() => handleOnRemove(url)}
                 variant="destructive"
                 size="icon"
               >
@@ -55,6 +63,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
+
       <CldUploadWidget onSuccess={onUpload} uploadPreset="mtjiktnu">
         {({ open }) => {
           const onClick = () => {
@@ -76,4 +85,5 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     </div>
   );
 };
+
 export default ImageUpload;
