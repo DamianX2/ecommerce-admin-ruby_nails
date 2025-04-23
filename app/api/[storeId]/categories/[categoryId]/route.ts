@@ -65,6 +65,12 @@ export async function PATCH(
       },
     });
 
+    if (!storeByUserId) {
+      return new NextResponse("Unauthorized to access this store", {
+        status: 403,
+      });
+    }
+
     const category = await prismadb.category.updateMany({
       where: {
         id: categoryId,

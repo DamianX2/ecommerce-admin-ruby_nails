@@ -23,7 +23,6 @@ import {
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -71,6 +70,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       router.push(`/${params.storeId}/sizes`);
       toast.success(toastMessage);
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -85,6 +85,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       router.push(`/${params.storeId}/sizes`);
       toast.success("Size deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Make sure you removed all products using this Size first.");
     } finally {
       setLoading(false);

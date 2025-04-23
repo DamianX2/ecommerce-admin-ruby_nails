@@ -2,8 +2,13 @@
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
+interface DataItem {
+  name: string;
+  total: number;
+}
+
 interface OverviewProps {
-  data: any[];
+  data: DataItem[];
 }
 
 export const Overview: React.FC<OverviewProps> = ({ data }) => {
@@ -18,13 +23,13 @@ export const Overview: React.FC<OverviewProps> = ({ data }) => {
           axisLine={false}
         />
         <YAxis
-          stroke="888888"
+          stroke="#888888"
           fontSize={12}
           tickLine={false}
           axisLine={false}
           tickFormatter={(value) => `$${value}`}
         />
-        <Bar dataKey="total" fill="#349db" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="total" fill="#3498db" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );

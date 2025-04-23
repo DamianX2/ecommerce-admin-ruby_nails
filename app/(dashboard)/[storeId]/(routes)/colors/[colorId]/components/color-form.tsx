@@ -23,7 +23,6 @@ import {
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -73,6 +72,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       router.push(`/${params.storeId}/colors`);
       toast.success(toastMessage);
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -87,6 +87,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       router.push(`/${params.storeId}/colors`);
       toast.success("Color deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Make sure you removed all products using this Color first.");
     } finally {
       setLoading(false);

@@ -63,6 +63,12 @@ export async function PATCH(
       },
     });
 
+    if (!storeByUserId) {
+      return new NextResponse("Unauthorized to access this store", {
+        status: 403,
+      });
+    }
+
     const color = await prismadb.color.updateMany({
       where: {
         id: colorId,

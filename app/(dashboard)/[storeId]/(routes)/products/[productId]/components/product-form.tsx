@@ -108,12 +108,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/products`, data);
+        await axios.post(`/api/${params.storeId}/products`, updatedData);
       }
       router.refresh();
       router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -128,6 +129,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.push(`/${params.storeId}/products`);
       toast.success("Product deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);

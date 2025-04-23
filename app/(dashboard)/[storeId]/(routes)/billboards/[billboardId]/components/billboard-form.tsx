@@ -41,8 +41,6 @@ export const BillboardsForm: React.FC<BillboardsFormProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
-  const storeId = params.storeId;
-  const billboardId = params.billboardId;
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -77,6 +75,7 @@ export const BillboardsForm: React.FC<BillboardsFormProps> = ({
       router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -93,6 +92,7 @@ export const BillboardsForm: React.FC<BillboardsFormProps> = ({
       router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error(
         "Make sure you removed all categories using this billboard first."
       );

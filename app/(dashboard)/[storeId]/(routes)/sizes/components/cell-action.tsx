@@ -38,6 +38,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.push(`/${params.storeId}/sizes`);
       toast.success("Size deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Make sure you removed all products using this size first.");
     } finally {
       setLoading(false);

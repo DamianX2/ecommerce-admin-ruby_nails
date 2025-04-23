@@ -13,6 +13,14 @@ interface ImageUploadProps {
   value: string[]; // Array to hold the image URLs
 }
 
+// Define type for Cloudinary upload result
+interface CloudinaryResult {
+  info: {
+    secure_url: string;
+    [key: string]: unknown; // Use 'unknown' instead of 'any' for type safety
+  };
+}
+
 const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled,
   onChange,
@@ -26,7 +34,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setIsMounted(true);
   }, []);
 
-  const onUpload = (result: any) => {
+  const onUpload = (result: CloudinaryResult) => {
     const newUrl = result.info.secure_url;
     setUrls((prev) => [...prev, newUrl]);
     onChange(newUrl); // Propagate the new URL to parent

@@ -38,6 +38,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error(
         "Make sure you removed all categories using this billboard first."
       );

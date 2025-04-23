@@ -44,6 +44,7 @@ export const StoreModal = () => {
 
       window.location.assign(`/${response.data.id}`);
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);

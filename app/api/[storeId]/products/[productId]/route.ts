@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 
 import prismadb from "@/lib/prismadb";
-import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants";
 
 export async function GET(
   _req: Request,
@@ -94,6 +93,12 @@ export async function PATCH(
         userId,
       },
     });
+
+    if (!storeByUserId) {
+      return new NextResponse("Unauthorized to access this store", {
+        status: 403,
+      });
+    }
 
     await prismadb.product.update({
       where: {

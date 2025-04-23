@@ -40,6 +40,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.push(`/${params.storeId}/categories`);
       toast.success("Category deleted.");
     } catch (error) {
+      console.error("Error occurred during deletion:", error);
       toast.error(
         "Make sure you removed all products using this Category first."
       );
