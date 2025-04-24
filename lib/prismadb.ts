@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+
 declare global {
+  /* eslint no-var: */
   var prisma: PrismaClient | undefined;
 }
 const prismadb = globalThis.prisma || new PrismaClient();

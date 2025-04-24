@@ -10,15 +10,7 @@ interface ImageUploadProps {
   disabled?: boolean;
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
-  value: string[]; // Array to hold the image URLs
-}
-
-// Define type for Cloudinary upload result
-interface CloudinaryResult {
-  info: {
-    secure_url: string;
-    [key: string]: unknown; // Use 'unknown' instead of 'any' for type safety
-  };
+  value: string[];
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -33,20 +25,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const onUpload = (result: CloudinaryResult) => {
+  // eslint-disable-next-line
+  const onUpload = (result: any) => {
     const newUrl = result.info.secure_url;
     setUrls((prev) => [...prev, newUrl]);
-    onChange(newUrl); // Propagate the new URL to parent
+    onChange(newUrl);
   };
 
   const handleOnRemove = (url: string) => {
     setUrls((prev) => prev.filter((item) => item !== url));
-    onRemove(url); // Propagate removal to parent
+    onRemove(url);
   };
 
   if (!isMounted) {
-    return null; // Ensure that the component is only rendered after mounting
+    return null;
   }
 
   return (
