@@ -2,10 +2,10 @@ import prismadb from "@/lib/prismadb";
 import { BillboardsForm } from "./components/billboard-form";
 
 type Props = {
-  params: {
+  params: Promise<{
     storeId: string;
     billboardId: string;
-  };
+  }>;
 };
 
 const BillboardPage = async ({ params }: Props) => {
