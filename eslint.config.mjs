@@ -11,6 +11,14 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // 🎯 File-specific override to disable `no-var` in prismadb.ts
+  {
+    files: ["lib/prismadb.ts"],
+    rules: {
+      "no-var": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
