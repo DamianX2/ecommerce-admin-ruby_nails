@@ -2,11 +2,12 @@ import prismadb from "@/lib/prismadb";
 import { ProductForm } from "./components/product-form";
 import { Product, Image } from "@prisma/client";
 
-const ProductPage = async ({
-  params,
-}: {
-  params: { productId: string; storeId: string };
-}) => {
+interface ProductPageProps {
+  params: Promise<{ productId: string; storeId: string }>;
+}
+
+const ProductPage = async ({ params }: ProductPageProps) => {
+  // Await params to get productId and storeId
   const { productId, storeId } = await params;
 
   const product = await prismadb.product.findUnique({

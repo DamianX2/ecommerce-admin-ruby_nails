@@ -4,14 +4,14 @@ import { redirect } from "next/navigation";
 import { SettingsForm } from "./components/settings-form";
 
 interface SettingsPageProps {
-  params: {
-    storeId: string;
-  };
+  params: Promise<{ storeId: string }>;
 }
 
 const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
-  const { userId } = await auth();
+  // Await params to get storeId
   const { storeId } = await params;
+
+  const { userId } = await auth();
 
   if (!userId) {
     redirect("/sign-in");
@@ -27,6 +27,7 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
   if (!store) {
     redirect("/");
   }
+
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
