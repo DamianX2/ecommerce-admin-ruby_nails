@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { sizeId: string } }
+  { params }: { params: Promise<{ sizeId: string }> }
 ) {
   try {
     const { sizeId } = await params;
