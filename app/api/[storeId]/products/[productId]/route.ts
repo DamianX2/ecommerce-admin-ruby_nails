@@ -35,13 +35,12 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; productId: string } }
+  { params }: { params: Promise<{ storeId: string; productId: string }> }
 ) {
   try {
     const { userId } = await auth();
     const body = await req.json();
 
-    // Await the params object properly
     const { storeId, productId } = await params;
 
     const {
@@ -118,7 +117,6 @@ export async function PATCH(
       },
     });
 
-    // Update product's images without creating a new product constant
     await prismadb.product.update({
       where: {
         id: productId,
@@ -143,7 +141,7 @@ export async function PATCH(
 
 export async function DELETE(
   _req: Request,
-  { params }: { params: { storeId: string; productId: string } }
+  { params }: { params: Promise<{ storeId: string; productId: string }> }
 ) {
   try {
     const { storeId } = await params;
